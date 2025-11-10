@@ -1,13 +1,18 @@
 import type { Config } from "jest";
-import { createDefaultPreset } from "ts-jest";
+import dotenv from "dotenv";
+import nextJest from "next/jest";
 
-const tsJestTransformCfg = createDefaultPreset().transform;
+dotenv.config({
+  path: ".env.development",
+});
+
+const createJestConfig = nextJest({
+  dir: ".",
+});
 
 const config: Config = {
   testEnvironment: "node",
-  transform: {
-    ...tsJestTransformCfg,
-  },
+  moduleDirectories: ["node_modules", "<rootDir>"],
 };
 
-export default config;
+export default createJestConfig(config);

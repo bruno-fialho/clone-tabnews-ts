@@ -1,6 +1,6 @@
 import { NextResponse } from "next/server";
 
-import database from "@/infra/database";
+import { database } from "@/infra/database";
 
 export async function GET() {
   const updatedAt = new Date().toISOString();
