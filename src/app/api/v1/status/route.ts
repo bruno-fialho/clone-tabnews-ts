@@ -26,7 +26,7 @@ export async function GET() {
   
   const databaseOpenedConnectionsValue =
   databaseOpenedConnectionsResult.rows[0].count;
-  console.log('databaseOpenedConnectionsValue', databaseOpenedConnectionsValue);
+
   return NextResponse.json(
     {     
       updated_at: updatedAt,
