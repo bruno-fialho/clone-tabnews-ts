@@ -4,7 +4,7 @@ const nextConfig = {
     if (isServer) {
       // Exclude node-pg-migrate from webpack bundling on the server
       config.externals = config.externals || [];
-      config.externals.push('node-pg-migrate');
+      config.externals.push("node-pg-migrate");
     }
     return config;
   },

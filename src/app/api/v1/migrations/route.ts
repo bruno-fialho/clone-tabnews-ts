@@ -13,7 +13,7 @@ function getDefaultMigrationOptions(dbClient: Client) {
     dryRun: true,
     migrationsTable: "pgmigrations",
     verbose: true,
-  }
+  };
 }
 
 export async function GET() {
@@ -27,7 +27,7 @@ export async function GET() {
     console.error("[migrations GET] error:", error);
     return NextResponse.json(
       { error: "Failed to retrieve migrations" },
-      { status: 500 }
+      { status: 500 },
     );
   } finally {
     await dbClient.end();
@@ -50,7 +50,7 @@ export async function POST() {
     console.error("[migrations POST] error:", error);
     return NextResponse.json(
       { error: "Failed to run migrations" },
-      { status: 500 }
+      { status: 500 },
     );
   } finally {
     await dbClient.end();
