@@ -13,6 +13,7 @@ const createJestConfig = nextJest({
 const config: Config = {
   testEnvironment: "node",
   moduleDirectories: ["node_modules", "<rootDir>"],
+  testTimeout: 60_000,
 };
 
 export default createJestConfig(config);
