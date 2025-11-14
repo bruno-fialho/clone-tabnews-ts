@@ -24,7 +24,7 @@ export async function GET() {
     const pendingMigrations = await migrationsRunner(defaultMigrationOptions);
     return NextResponse.json(pendingMigrations, { status: 200 });
   } catch (error) {
-    console.error("[migrations GET] error:", error);
+    console.error("[migrations GET]:", error);
     return NextResponse.json(
       { error: "Failed to retrieve migrations" },
       { status: 500 },
@@ -47,7 +47,7 @@ export async function POST() {
     const status = migratedMigrations.length > 0 ? 201 : 200;
     return NextResponse.json(migratedMigrations, { status });
   } catch (error) {
-    console.error("[migrations POST] error:", error);
+    console.error("[migrations POST]:", error);
     return NextResponse.json(
       { error: "Failed to run migrations" },
       { status: 500 },

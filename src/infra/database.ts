@@ -33,7 +33,7 @@ async function query(queryObject: QueryConfig) {
     const result = await client.query(queryObject);
     return result;
   } catch (error) {
-    console.error("[database.query]  error:", error);
+    console.error("[database.query]:", error);
     throw error;
   } finally {
     await client?.end();
