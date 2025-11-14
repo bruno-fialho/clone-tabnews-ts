@@ -5,8 +5,10 @@
   "main": "index.ts",
   "scripts": {
     "dev": "pnpm services:up && pnpm services:wait:database && pnpm migrations:up && next dev",
+    "postdev": "npm run services:stop",
     "build": "next build",
     "start": "pnpm services:up && pnpm services:wait:database && pnpm migrations:up && next start",
+    "poststart": "npm run services:stop",
     "test": "pnpm services:up && concurrently -n next,jest --hide next -k -s command-jest \"next dev\" \"jest --runInBand --verbose\"",
     "posttest": "pnpm services:stop",
     "test:watch": "jest --watchAll --runInBand",
