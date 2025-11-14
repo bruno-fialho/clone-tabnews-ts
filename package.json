@@ -8,6 +8,7 @@
     "build": "next build",
     "start": "pnpm services:up && pnpm services:wait:database && pnpm migrations:up && next start",
     "test": "pnpm services:up && concurrently -n next,jest --hide next -k -s command-jest \"next dev\" \"jest --runInBand --verbose\"",
+    "posttest": "pnpm services:stop",
     "test:watch": "jest --watchAll --runInBand",
     "lint:eslint:check": "next lint --dir .",
     "lint:prettier:check": "prettier --check .",
