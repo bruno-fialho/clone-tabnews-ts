@@ -21,9 +21,13 @@ async function fetchAPI(key: string): Promise<StatusResponse> {
 }
 
 function UpdatedAt() {
-  const { data, isLoading } = useSWR<StatusResponse>("/api/v1/status", fetchAPI, {
-    refreshInterval: 2000,
-  });
+  const { data, isLoading } = useSWR<StatusResponse>(
+    "/api/v1/status",
+    fetchAPI,
+    {
+      refreshInterval: 2000,
+    },
+  );
 
   let updatedAtText = "Carregando...";
 
@@ -35,9 +39,13 @@ function UpdatedAt() {
 }
 
 function DatabaseStatus() {
-  const { data, isLoading } = useSWR<StatusResponse>("/api/v1/status", fetchAPI, {
-    refreshInterval: 2000,
-  });
+  const { data, isLoading } = useSWR<StatusResponse>(
+    "/api/v1/status",
+    fetchAPI,
+    {
+      refreshInterval: 2000,
+    },
+  );
 
   let databaseStatusInformation: ReactNode = "Carregando...";
 
@@ -58,6 +66,7 @@ function DatabaseStatus() {
   return (
     <>
       <h2>Database</h2>
+
       <div>{databaseStatusInformation}</div>
     </>
   );
