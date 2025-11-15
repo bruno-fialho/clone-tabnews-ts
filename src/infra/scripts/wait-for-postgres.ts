@@ -11,6 +11,10 @@ function checkPostgres(): void {
     }
 
     console.log("\n🟢 Postgres está pronto e aceitando conexões!");
+
+    setTimeout(() => {
+      process.exit(0);
+    }, 1000);
   }
 }
 
