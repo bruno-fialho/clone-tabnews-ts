@@ -22,6 +22,40 @@ export class InternalServerError extends Error {
   }
 }
 
+export class NotFoundError extends Error {
+  action: string;
+  statusCode: number;
+
+  constructor({
+    cause,
+    message,
+    action,
+  }: {
+    cause?: Error;
+    message?: string;
+    action?: string;
+  }) {
+    super(message || "Não foi possível encontrar este recurso no sistema.", {
+      cause,
+    });
+
+    this.name = "NotFoundError";
+    this.action =
+      action ||
+      "Verifique se os parâmetros enviados na consulta estão corretos.";
+    this.statusCode = 404;
+  }
+
+  toJSON() {
+    return {
+      name: this.name,
+      message: this.message,
+      action: this.action,
+      statusCode: this.statusCode,
+    };
+  }
+}
+
 export class ServiceError extends Error {
   action: string;
   statusCode: number;
@@ -34,6 +68,38 @@ export class ServiceError extends Error {
     this.name = "ServiceError";
     this.action = "Verifique se o serviço está disponível.";
     this.statusCode = 503;
+  }
+
+  toJSON() {
+    return {
+      name: this.name,
+      message: this.message,
+      action: this.action,
+      statusCode: this.statusCode,
+    };
+  }
+}
+
+export class ValidationError extends Error {
+  action: string;
+  statusCode: number;
+
+  constructor({
+    cause,
+    message,
+    action,
+  }: {
+    cause?: Error;
+    message?: string;
+    action?: string;
+  }) {
+    super(message || "Um erro de validação ocorreu.", {
+      cause,
+    });
+
+    this.name = "ValidationError";
+    this.action = action || "Ajuste os dados enviados e tente novamente.";
+    this.statusCode = 400;
   }
 
   toJSON() {

@@ -1,5 +1,3 @@
-import { NextResponse } from "next/server";
-
 import { database } from "@/infra/database";
 import { InternalServerError } from "@/infra/errors";
 
@@ -29,7 +27,7 @@ export async function GET() {
     const databaseOpenedConnectionsValue =
       databaseOpenedConnectionsResult.rows[0].count;
 
-    return NextResponse.json(
+    return Response.json(
       {
         updated_at: updatedAt,
         dependencies: {
@@ -49,6 +47,6 @@ export async function GET() {
 
     console.error("[status.GET]:", publicErrorObject);
 
-    return NextResponse.json(publicErrorObject, { status: 500 });
+    return Response.json(publicErrorObject, { status: 500 });
   }
 }
