@@ -1,5 +1,5 @@
 import { database } from "@/infra/database";
-import { ValidationError } from "@/infra/errors";
+import { NotFoundError, ValidationError } from "@/infra/errors";
 
 export interface UserInputValues {
   username: string;
@@ -17,12 +17,6 @@ interface User {
 }
 
 async function create(userInputValues: UserInputValues): Promise<User> {
-  await validateUniqueEmail(userInputValues.email);
-  await validateUniqueUsername(userInputValues.username);
-
-  const newUser = await runInsertQuery(userInputValues);
-  return newUser;
-
   async function validateUniqueEmail(email: string): Promise<void> {
     const results = await database.query({
       text: `
@@ -86,8 +80,46 @@ async function create(userInputValues: UserInputValues): Promise<User> {
 
     return results.rows[0];
   }
+
+  await validateUniqueEmail(userInputValues.email);
+  await validateUniqueUsername(userInputValues.username);
+
+  const newUser = await runInsertQuery(userInputValues);
+  return newUser;
+}
+
+async function findOneByUsername(username: string): Promise<User> {
+  async function runSelectQuery(usernameValue: string): Promise<User> {
+    const results = await database.query({
+      text: `
+        SELECT
+          *
+        FROM
+          users
+        WHERE
+          LOWER(username) = LOWER($1)
+        LIMIT
+          1
+        ;`,
+      values: [usernameValue],
+    });
+
+    if (results.rowCount === 0) {
+      throw new NotFoundError({
+        message: "O username informado não foi encontrado no sistema.",
+        action: "Verifique se o username está digitado corretamente.",
+      });
+    }
+
+    return results.rows[0];
+  }
+
+  const userFound = await runSelectQuery(username);
+
+  return userFound;
 }
 
 export const user = {
   create,
+  findOneByUsername,
 };
