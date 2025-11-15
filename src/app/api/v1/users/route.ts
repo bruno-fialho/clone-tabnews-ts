@@ -1,21 +1,19 @@
-import { NextRequest, NextResponse } from "next/server";
-
-import { user, UserInputValues } from "@/models/user";
 import { NotFoundError, ValidationError } from "@/infra/errors";
+import { user, UserInputValues } from "@/models/user";
 
-export async function POST(request: NextRequest) {
+export async function POST(request: Request) {
   try {
     const userInputValues: UserInputValues = await request.json();
     const newUser = await user.create(userInputValues);
-    return NextResponse.json(newUser, { status: 201 });
+    return Response.json(newUser, { status: 201 });
   } catch (error) {
     console.error("[migrations POST]:", error);
 
     if (error instanceof ValidationError || error instanceof NotFoundError) {
-      return NextResponse.json(error, { status: error.statusCode });
+      return Response.json(error, { status: error.statusCode });
     }
 
-    return NextResponse.json(
+    return Response.json(
       { error: "Failed to run migrations" },
       { status: 500 },
     );
