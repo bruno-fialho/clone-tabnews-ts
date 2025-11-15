@@ -1,9 +1,9 @@
 import { NotFoundError, ValidationError } from "@/infra/errors";
 import { user, UserInputValues } from "@/models/user";
 
-export async function POST(request: Request) {
+export async function POST(req: Request) {
   try {
-    const userInputValues: UserInputValues = await request.json();
+    const userInputValues: UserInputValues = await req.json();
     const newUser = await user.create(userInputValues);
     return Response.json(newUser, { status: 201 });
   } catch (error) {
