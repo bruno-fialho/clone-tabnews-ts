@@ -1,7 +1,7 @@
 import { NextRequest, NextResponse } from "next/server";
 
 import { user, UserInputValues } from "@/models/user";
-import { ValidationError } from "@/infra/errors";
+import { NotFoundError, ValidationError } from "@/infra/errors";
 
 export async function POST(request: NextRequest) {
   try {
@@ -11,8 +11,8 @@ export async function POST(request: NextRequest) {
   } catch (error) {
     console.error("[migrations POST]:", error);
 
-    if (error instanceof ValidationError) {
-      return NextResponse.json(error, { status: 400 });
+    if (error instanceof ValidationError || error instanceof NotFoundError) {
+      return NextResponse.json(error, { status: error.statusCode });
     }
 
     return NextResponse.json(
